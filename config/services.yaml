@@ -1,0 +1,24 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Kernel.php'
+
+    _instanceof:
+        App\Shared\Application\Command\CommandHandler:
+            tags:
+                - { name: 'messenger.message_handler', bus: command.bus }
+
+    App\Item\Presentation\Cli\ItemImportCliCommand:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+
+    App\Shared\Infrastructure\Exception\CliExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: console.error }

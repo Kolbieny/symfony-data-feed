@@ -1,0 +1,15 @@
+default:
+    suites:
+        item:
+            paths:
+                - '%paths.base%/tests/Integration/Item/Features'
+            contexts:
+                - App\Tests\Integration\FeatureContext
+                - App\Tests\Integration\Item\Steps\ItemSteps
+                - App\Tests\Integration\Shared\Steps\SharedSteps
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension:
+            bootstrap: tests/bootstrap.php
+            kernel:
+                environment: test

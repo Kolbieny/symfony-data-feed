@@ -1,0 +1,21 @@
+version: "3"
+services:
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - .:/var/www/html
+    db:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DATABASE_ROOT_PASSWORD}
+            MYSQL_USER: ${DATABASE_USER}
+            MYSQL_PASS: ${DATABASE_PASS}
+        ports:
+            - "3306:3306"
+        volumes:
+            - db:/var/lib/mysql
+
+volumes:
+    db:
