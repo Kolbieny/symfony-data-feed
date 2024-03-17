@@ -58,6 +58,7 @@ Feature: Importing an item data to the database by CLI command
     """
     When The CLI command "app:item:import" with argument "test-behat.xml" has been called
     Then The CLI command failed
+    Then There are entries in error log file
     And Item of id "1" is not saved in database
   Scenario: Item not placed in database because of invalid file name
     Given The file with data exists and has a following content:
@@ -88,4 +89,5 @@ Feature: Importing an item data to the database by CLI command
     """
     When The CLI command "app:item:import" with argument "not-exists.xml" has been called
     Then The CLI command failed
+    Then There are entries in error log file
     And Item of id "1" is not saved in database

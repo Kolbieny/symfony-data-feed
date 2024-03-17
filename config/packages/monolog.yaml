@@ -1,12 +1,14 @@
 monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
-
-when@dev:
+    handlers:
+        main:
+            type: stream
+            path: "%kernel.logs_dir%/error.log"
+            level: error
+            channels: ["app"]
+when@test:
     monolog:
         handlers:
             main:
-                type: stream
-                path: "%kernel.logs_dir%/error.log"
-                level: error
-                channels: ["app"]
+                path: "%kernel.logs_dir%/error_test.log"
