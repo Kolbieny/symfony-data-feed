@@ -7,17 +7,13 @@ namespace App\Item\Infrastructure\Doctrine\Repository;
 use App\Item\Domain\Model\Item;
 use App\Item\Domain\Repository\ItemRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 class ItemDoctrineRepository extends ServiceEntityRepository implements ItemRepository
 {
-    private EntityManagerInterface $em;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Item::class);
-        $this->em = $this->getEntityManager();
     }
 
     /** @param Item[] $items */
@@ -25,7 +21,7 @@ class ItemDoctrineRepository extends ServiceEntityRepository implements ItemRepo
     {
         $batchSize = 100;
         foreach ($items as $i => $item) {
-            $this->em->persist($item);
+            $this->getEntityManager()->persist($item);
             if (($i % $batchSize) === 0) {
                 $this->flushAndClear();
             }
@@ -41,7 +37,7 @@ class ItemDoctrineRepository extends ServiceEntityRepository implements ItemRepo
 
     private function flushAndClear(): void
     {
-        $this->em->flush();
-        $this->em->clear();
+        $this->getEntityManager()->flush();
+        $this->getEntityManager()->clear();
     }
 }

@@ -16,7 +16,8 @@ final class ItemImportCommandHandler implements CommandHandler
     ) {
     }
 
-    public function __invoke(ItemImportCommand $command): void
+    /** @var ItemImportCommand $command */
+    public function __invoke(\App\Shared\Application\Command\Command $command): void
     {
         $items = $this->converter->convertFromFileToDomainModels($command->filePath);
         $this->repository->saveMultiple($items);
